@@ -92,16 +92,14 @@ def sort_b(nuclides):
     return [nuclide for _, nuclide in sorted(zip(bs, nuclides), reverse=True)]
 
 def alpha(nuclides):
-    b = b_array(nuclides)
-
     max_n, max_z, _ = max_nza(nuclides)
     masses = np.zeros((max_n + 1, max_z + 1))
-    alpha = np.zeros((max_n + 1, max_z + 1))
 
     for nuclide in nuclides:
         masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
 
     Ma = masses[2, 2]
+    alpha = np.zeros((max_n + 1, max_z + 1))
 
     for nuclide in nuclides:
         n = nuclide["N"]
@@ -123,16 +121,13 @@ def alpha(nuclides):
     plt.show()
 
 def beta(nuclides):
-    b = b_array(nuclides)
-
     max_n, max_z, _ = max_nza(nuclides)
     masses = np.zeros((max_n + 1, max_z + 1))
-    beta = np.zeros((max_n + 1, max_z + 1))
 
     for nuclide in nuclides:
         masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
 
-    Ma = masses[2, 2]
+    beta = np.zeros((max_n + 1, max_z + 1))
 
     for nuclide in nuclides:
         n = nuclide["N"]
@@ -162,6 +157,66 @@ def beta(nuclides):
 
     plt.show()
 
+def S2n(nuclides):
+    max_n, max_z, _ = max_nza(nuclides)
+    masses = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
+
+    s2n = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        n = nuclide["N"]
+        z = nuclide["Z"]
+
+        # Nemáme data
+        if masses[n, z] == 0:
+            continue
+
+        if n < 2 or masses[n - 2, z] == 0:
+            continue
+
+        s2n[n, z] = masses[n - 2, z] + 2 * Mn - masses[n, z]
+
+    plt.imshow(s2n.transpose(), cmap=colormap(), origin="lower", interpolation="none", vmin=0, vmax=30)
+    plt.colorbar(label="keV")                          
+    plt.title("Two neutron separation energy")
+    plt.xlabel("N")
+    plt.ylabel("Z")  
+
+    plt.show()
+
+def S2p(nuclides):
+    max_n, max_z, _ = max_nza(nuclides)
+    masses = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
+
+    s2p = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        n = nuclide["N"]
+        z = nuclide["Z"]
+
+        # Nemáme data
+        if masses[n, z] == 0:
+            continue
+
+        if z < 2 or masses[n, z - 2] == 0:
+            continue
+
+        s2p[n, z] = masses[n, z - 2] + 2 * Mp - masses[n, z]
+
+    plt.imshow(s2p.transpose(), cmap=colormap(), origin="lower", interpolation="none", vmin=0, vmax=30)
+    plt.colorbar(label="keV")                          
+    plt.title("Two proton separation energy")
+    plt.xlabel("N")
+    plt.ylabel("Z")  
+
+    plt.show()
+
 nuclides = read_data()
 plot_b(nuclides)
 
@@ -173,9 +228,9 @@ for i in range(5):
 
 alpha(nuclides)
 beta(nuclides)
+S2n(nuclides)
+S2p(nuclides)
+
 
 b = b_array(nuclides)
 
-plt.plot(b[:, 82])
-plt.ylim(7700, 7900)
-plt.show()
