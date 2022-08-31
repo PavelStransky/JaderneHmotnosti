@@ -66,17 +66,19 @@ def colormap():
 
     return cmap
 
-def plot_b(nuclides):
+def b_array(nuclides):
     max_n, max_z, _ = max_nza(nuclides)
 
     b = np.zeros((max_n + 1, max_z + 1))
     for nuclide in nuclides:
         b[nuclide["N"], nuclide["Z"]] = nuclide["b"]
 
-    cmap = colormap()
+    return b
 
-    plt.imshow(b.transpose(), cmap=cmap, origin="lower", interpolation="none")
-    plt.plot([0, max_z], [0, max_z], "black")
+def plot_b(nuclides):
+    b = b_array(nuclides)
+    plt.imshow(b.transpose(), cmap=colormap(), origin="lower", interpolation="none")
+    plt.plot([0, min(b.shape)], [0, min(b.shape)], "black")
 
     plt.colorbar(label="keV")                          
     plt.title("Binding energy per nucleon")
@@ -89,6 +91,77 @@ def sort_b(nuclides):
     bs = [nuclide["b"] for nuclide in nuclides]
     return [nuclide for _, nuclide in sorted(zip(bs, nuclides), reverse=True)]
 
+def alpha(nuclides):
+    b = b_array(nuclides)
+
+    max_n, max_z, _ = max_nza(nuclides)
+    masses = np.zeros((max_n + 1, max_z + 1))
+    alpha = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
+
+    Ma = masses[2, 2]
+
+    for nuclide in nuclides:
+        n = nuclide["N"]
+        z = nuclide["Z"]
+
+        if masses[n, z] == 0:
+            continue
+
+        if n > 2 and z > 2 and masses[n - 2, z - 2] > 0 and masses[n, z] - Ma > masses[n - 2, z - 2]:
+            alpha[n, z] = 1
+        else:
+            alpha[n, z] = 2
+
+    plt.imshow(alpha.transpose(), cmap=colormap(), origin="lower", interpolation="none")
+    plt.title("Alpha decay")
+    plt.xlabel("N")
+    plt.ylabel("Z")  
+
+    plt.show()
+
+def beta(nuclides):
+    b = b_array(nuclides)
+
+    max_n, max_z, _ = max_nza(nuclides)
+    masses = np.zeros((max_n + 1, max_z + 1))
+    beta = np.zeros((max_n + 1, max_z + 1))
+
+    for nuclide in nuclides:
+        masses[nuclide["N"], nuclide["Z"]] = nuclide["M"]
+
+    Ma = masses[2, 2]
+
+    for nuclide in nuclides:
+        n = nuclide["N"]
+        z = nuclide["Z"]
+
+        # Nemáme data
+        if masses[n, z] == 0:
+            continue
+
+        if z >= max_z or masses[n - 1, z + 1] == 0:
+            continue
+
+        if n >= max_n or masses[n + 1, z - 1] == 0:
+            continue
+
+        if n > 1 and masses[n, z] - Mn + Mp > masses[n - 1, z + 1]:
+            beta[n, z] = 1
+        elif z > 1 and masses[n, z] - Mp + Mn > masses[n + 1, z - 1]:
+            beta[n, z] = 2
+        else:
+            beta[n, z] = 3
+
+    plt.imshow(beta.transpose(), cmap=colormap(), origin="lower", interpolation="none")
+    plt.title("Beta decay")
+    plt.xlabel("N")
+    plt.ylabel("Z")  
+
+    plt.show()
+
 nuclides = read_data()
 plot_b(nuclides)
 
@@ -97,3 +170,12 @@ sorted_nuclides = sort_b(nuclides)
 # Tři prvky s nejvyšší vazebnou energií
 for i in range(5):
     print(sorted_nuclides[i])
+
+alpha(nuclides)
+beta(nuclides)
+
+b = b_array(nuclides)
+
+plt.plot(b[:, 82])
+plt.ylim(7700, 7900)
+plt.show()
