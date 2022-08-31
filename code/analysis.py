@@ -39,7 +39,7 @@ def read_data():
             nuclide["error"] = float(line[68:77])
 
             # Hmotnost dopočteme
-            nuclide["M"] = Mn * nuclide["N"] + Mp * nuclide["Z"] - nuclide["b"] * nuclide["A"]
+            nuclide["M"] = Mn * nuclide["N"] + Mp * nuclide["Z"] - nuclide["b"] * nuclide["A"] / 1000
 
             nuclides.append(nuclide)
 
@@ -85,5 +85,15 @@ def plot_b(nuclides):
 
     plt.show()
     
-plot_b(read_data())
+def sort_b(nuclides):
+    bs = [nuclide["b"] for nuclide in nuclides]
+    return [nuclide for _, nuclide in sorted(zip(bs, nuclides), reverse=True)]
 
+nuclides = read_data()
+plot_b(nuclides)
+
+sorted_nuclides = sort_b(nuclides)
+
+# Tři prvky s nejvyšší vazebnou energií
+for i in range(5):
+    print(sorted_nuclides[i])
