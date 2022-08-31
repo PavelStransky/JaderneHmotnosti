@@ -1,0 +1,272 @@
+\documentclass[a4paper,12pt,oneside]{article}
+
+%\usepackage{palatino,newtxmath,bbold}	%% Písma
+\usepackage{lmodern}
+\usepackage{amsthm,thmtools}
+\usepackage{bold-extra}
+
+\usepackage{microtype}					%% Lepší mezery
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}	            %% Kódování textu
+\usepackage[czech]{babel}               %% České nápisy
+\usepackage{epsfig}
+\usepackage{csquotes}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{indentfirst}				%% Odsazení prvního odstavce
+
+\usepackage{tablefootnote}              %% Poznámky pod čarou z tabulek
+
+\usepackage{listings}
+\usepackage{comment}
+
+\usepackage{mhchem}                     %% Psaní značek nuklidů
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage[unicode]{hyperref}			%% Hypertextové odkazy
+\hypersetup{
+	pdftitle={Systematika jaderných hmotností},
+	pdfauthor={Pavel Stránský},
+	pdffitwindow=true,
+	colorlinks=true,
+	urlcolor=cyan,            			%barva textu pri tisku
+	linkcolor=red,
+	citecolor=green,
+	filecolor=magenta
+}
+
+% Velikost stránky
+\addtolength{\topmargin}{-1.5cm} %\addtolength{\textheight}{-10cm}
+\addtolength{\textwidth}{4cm} \addtolength{\textheight}{4cm} % Šířka a výška textu
+\addtolength{\voffset}{-0.5cm} % Horní okraj
+\addtolength{\hoffset}{-2cm}
+\setlength{\headheight}{15pt}
+
+\renewcommand{\Im}{\mathop{\text{Im}}}
+\renewcommand{\Re}{\mathop{\text{Re}}}
+
+\pagestyle{headings} 
+% \addtolength{\textwidth}{4cm} \addtolength{\textheight}{6cm} 
+% \addtolength{\voffset}{-3cm} 
+% \addtolength{\hoffset}{-2cm} \setlength{\parskip}{0.5ex plus 0.5ex minus 0.1ex}
+
+\def\unit#1{\,\mathrm{#1}}
+\def\c{,\!}                             % Čárka v číslech
+\def\operator#1{\hat{\mathsf{#1}}}
+\def\vectoroperator#1{\boldsymbol{\mathsf{\hat{#1}}}}
+\def\im{\mathrm{i}}
+\DeclareMathOperator{\e}{e}
+
+\newtheoremstyle{red}
+{5pt}{5pt}{\itshape\color{red}}{}{\bfseries\color{red}}{:}{.5em}{}
+
+\theoremstyle{red}
+\declaretheorem[name=Úkol,numberwithin=section]{task}
+
+\begin{document}
+\title{Systematika jaderných hmotností}
+\date{\today}
+\author{Pavel Stránský}
+
+\maketitle
+
+\section{Jaderné jednotky}
+V jaderné a částicové fyzice se využívá Einsteinem odvozené ekvivalence mezi hmotností $M$ a energií $E$
+\begin{equation}
+    E=Mc^{2}
+\end{equation}
+kde $c\approx3\c0\cdot10^8\unit{ms^{-1}}$ je rychlost světla.
+Za jednotku energie se bere \emph{elektronvolt}
+\begin{equation}
+    [E]=\mathrm{eV}=1\c602\cdot10^{-19}\unit{J},
+\end{equation}
+což, jak název napovídá, je kinetická energie elektronu urychlená ve vakuu napětím $1\,\mathrm{V}$.
+Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlost světla $c=1$, a tudíž hmotnost i energie mají stejnou jednotku.
+
+\section{Typické objekty mikrosvěta}
+\begin{minipage}{0.95\linewidth}
+\begin{tabular}{|l|l|l|c|l|}
+    \hline
+    & & {\color{red}\bf hmotnost} & náboj & poločas rozpadu \\
+    \hline
+    \emph{elektron} & $e^{-}$ & $M_{e}=0\c511\unit{MeV}$ & $-$ & stabilní \\
+    \emph{proton} & $p^{+}$ & {\color{red}$M_{p}=938\unit{MeV}$} & $+$ & stabilní\footnote{
+        Některé teorie předpovídají, že proton se rozpadá s enormním poločasem rozpadu $T_{p}\approx10^{32}\unit{let}$.
+        } \\
+    \emph{neutron} & $n^{0}$ & {\color{red}$M_{n}=940\unit{MeV}$}\footnote{
+        Neutron je těžší než proton. Volný neutron se rozpadá procesem
+        \begin{equation}
+            \label{eq:beta}
+            n^{0}\rightarrow p^{+}+e^{-}+\overline{\nu}_{e},
+        \end{equation}
+        kde $\overline{\nu}_{e}$ je elektronové antineutrino.
+        } & $0$ & $T_{n}=611\unit{s}$ \\
+    \hline
+\end{tabular}
+\end{minipage}
+
+\begin{task}
+    Převeďte hmotnosti z tabulky na kg.
+\end{task}
+
+\section{Atomové jádro}
+    Zde budeme uvažovat pouze atomové jádro, nebudeme se tedy zabývat elektrony z elektronového obalu atomu.
+
+    Jádro se skládá z protonů a neutronů. Ty se souhrnně označují jako \emph{nukleony}.
+    Počet protonů $Z$ se nazývá \emph{protonové číslo},
+    počet neutronu $N$ se nazývá \emph{neutronové číslo}
+    a jejich součet $A=N+Z$ je \emph{hmotnostní číslo} nebo nukleonové číslo.
+
+    Jádro se obecně označuje $\ce{^{\it A}_{\it P}X}$, kde X je symbol daného prvku, například $\ce{^{235}_{92}U}$.
+    Protonové číslo se často vynechává, protože je jednoznačně dáno symbolem prvku.
+
+    Hmotnost atomového jádra je
+    \begin{equation}
+        M=ZM_{p}+NM_{n}-B,
+    \end{equation}
+    kde $B$ je \emph{vazebná energie}.
+    Aby jádro mohlo existovat, musí být $B>0$.
+    Čím je vazebná energie vyšší, tím je jádro silněji vázané a stabilnější.
+    Další často používaná veličina je vazebná energie na nukleon,
+    \begin{equation}
+        b=\frac{B}{A}.
+    \end{equation}
+
+\section{Jaderná interakce}
+    Nukleony se drží v jádře díky silné jaderné interakci. 
+    Ta je krátkodosahová, přitažlivá a působí přibližně stejnou silou mezi protony i mezi neutrony.
+
+\section{Kapkový model jádra}
+    Jeden z nejjednodušších modelů atomového jádra aproximuje jadernou hmotu jako \emph{nestlačitelnou} \emph{homogenně nabitou} kapalinu.
+    Poloměr jádra je tak
+    \begin{equation}
+        R=R_{0}\sqrt[3]{A},
+    \end{equation}
+    kde $R_{0}=1\c2\unit{fm}$.\footnote{Jednotka femtometr $\mathrm{fm}=10^{-15}\unit{m}$ se obvykle v jaderné fyzice nazývá fermi.}
+    Vazebná energie je pak dána výrazem
+    \begin{equation}
+        \label{eq:BetheWeizsackerVS}
+        B=a_{V}'V-a_{S}'S-\frac{3}{5}\frac{1}{4\pi\epsilon_{0}}\frac{Z^{2}}{R}-a_{A}\frac{\left(N-Z\right)^{2}}{A}+\delta(N,Z).
+    \end{equation}
+
+    \begin{itemize}
+        \item\emph{Objemový člen.}
+            První člen vyjadřuje interakci jednotlivých nukleonů se svými nejbližšími sousedy a je úměrný objemu jádra
+            \begin{equation}
+                V=\frac{4}{3}\pi R^{3}.
+            \end{equation}
+    
+        \item\emph{Povrchový člen.}
+            Druhý člen snižuje vazebnou energii tím, že nukleony na povrchu jádra interagují s méně nukleony než ty uvnitř.
+            Odpovídá povrchovému napětí u klasických kapalin a energie s ním spojená je úměrná povrchu jádra
+            \begin{equation}
+                S=4\pi R^{2}.
+            \end{equation}
+
+        \item\emph{Coulombický člen.}
+            Třetí člen vyjadřuje elektrostatické odpuzování kladně nabitých protonů.
+            Odpovídá potenciální energii homogenně nabité koule.
+
+        \item\emph{Asymetrie (Pauliho člen).}
+            Pro jádro je výhodnější, když má stejný počet protonů a neutronů.
+            Je to důsledek Pauliho vylučovacího principu: 
+            Protony a neutrony jsou \emph{fermiony}, které se nemohou vyskytovat ve stejném stavu, a tudíž se nemohou nacházet na stejném místě.
+            Čím více protonů nebo neutronů, tím musejí být dál od středu jádra, a jsou tedy slaběji vázané.
+
+        \item\emph{Párovací člen.}
+            Pro fermiony je mnohem energeticky výhodnější, pokud se vyskytují v párech.
+            Vazebná energie je tedy vyšší, pokud má jádro sudý počet protonů i neutronů (sudo-sudá jádra) než pokud je $N$ nebo $Z$ liché.
+            Licho-lichá jádra jsou nejvíce nestabilní a mají tendenci přeměnit jeden nukleon v opačný typ, čímž se jejich stabilita výrazně zvýší.
+            V přírodě se vyskytuje jen pět stabilních licho-lichých jader, a to čtyři lehká jádra (zde by přeměna $n^{0}\leftrightarrow p^{+}$ vedla k výrazné asymetrii počtu protonů a neutronů)
+                $\ce{^{2}_{1}H}$, 
+                $\ce{^{6}_{3}Li}$, 
+                $\ce{^{10}_{5}B}$ a
+                $\ce{^{14}_{7}N}$,
+            a jedno těžké jádro, izomer $\ce{^{180}_{73}Ta}$, které však může mít tak dlouhý poločas rozpadu, že jeho rozpad zatím nebyl pozorován.
+        \end{itemize}
+
+    Zatímco prvním třem členům lze porozumět pomocí klasické fyziky, Pauliho člen a párovací člen se nedají vysvětlit jinak než pomocí mikroskopické teorie (kvantové teorie).
+
+    Vzorec~\eqref{eq:BetheWeizsackerVS} se obvykle užívá ve tvaru
+    \begin{equation}
+        \label{eq:BetheWeizsacker}
+        B=a_{V}A-a_{S}A^{\frac{2}{3}}-a_{C}\frac{Z^{2}}{R}-a_{A}\frac{\left(N-Z\right)^{2}}{A}+\delta(N,Z).
+    \end{equation}
+    a nazývá se \emph{Betheho-Weizsäckerova formule}.
+    Parametry $a_{V},a_{S},a_{C},a_{A}$ a $\delta$ jsou všechny kladné a určují se z naměřených dat známých jader.
+
+    Jádro má ve skutečnosti slupkovou strukturu podobně jako atomový obal.
+
+\section{Tabulka nuklidů}
+    Atomová jádra s daným $N$ a $Z$ se nazývají \emph{nuklidy}.
+    Uspořádávají se do ~\emph{tabulky nuklidů}\footnote{Nuclear chart.}, kde na vodorovné ose je neutronové číslo $N$ a na svislé ose protonové číslo $Z$.
+    Do tabulky se běžně uvádí způsoby přeměny (rozpadové kanály), poločas přeměny (střední doba života) a další charakteristiky atomového jádra.
+    Jádra stejného prvku lišící se počtem neutronů se nazývají \emph{izotopy}.
+
+    \subsection{Radioaktivní přeměna prvků}
+        Atomová jádra mají tendenci přeměňovat se tak, aby byla co nejstabilnější. Tím se zvyšuje jejich vazebná energie a při přeměně se přebytečná energie vyzařuje, což se využívá například v energetice v atomových elektrárnách.
+        Z Betheho-Weizsäckerovy formule je vidět, že kdyby nebylo Coulombického odpuzování, pak by vždy nejstabilnější jádra měla díky asymetrickému členu $N=Z$.        
+        Coulombické odpuzování způsobuje, že stabilnější jádra budou mít více neutronů než protonů, přičemž tento efekt je výraznější u těžších jader.
+        Z formule~\eqref{eq:BetheWeizsacker} lze odvodit, že nejstabilnější jádra mají 
+        \begin{equation}
+            \frac{N}{Z}\approx 1+\frac{a_{C}}{2a_{A}}A^{\frac{2}{3}},
+        \end{equation}
+        tj. \emph{údolí stability} se v tabulce nuklidů otáčí pod diagonálu.
+
+        Tři nejdůležitější procesy přeměny jsou
+        \begin{enumerate}
+            \item\emph{$\alpha$ rozpad.}
+                Z jádra vylétne $\alpha$ částice, což je velmi silně vázané jádro $\ce{^{4}_{2}He}$,
+                \begin{equation}
+                    \ce{^{\it A}_{\it Z}X}\rightarrow\ce{^{{\it A}-4}_{{\it Z}-2}Y}+\ce{^{4}_{2}He}.
+                \end{equation}
+                Tento proces je neběžnější pro těžká jádra v oblasti údolí stability a nad ním.
+                V tabulce nuklidů získáme procesem jádro posunuté diagonálně o dvě políčka vlevo dolů.
+
+            \item\emph{$\beta$ rozpad.}
+                V jádře se přemění neutron na proton procesem~\eqref{eq:beta}.
+                Hmotnostní číslo tedy zůstane zachováno, z jádra vylétne vzniklý elektron (a antineutrino),
+                \begin{equation}
+                    \ce{^{\it A}_{\it Z}X}\rightarrow\ce{^{\it A}_{{\it Z}+1}Y}+e^{-}+\bar{\nu}_{e}.
+                \end{equation}
+                Nové jádro se nachází o jedno políčko diagonálně vlevo nahoru.
+                $\beta$ rozpad je nejčastější u jader s přebytkem neutronů, což jsou jádra nacházející se pod údolím stability.
+            
+            \item\emph{$\beta^{+}$ rozpad.}
+                V jádře se přemění proton na neutron.
+                jedná se o proces opačný k $\beta$ rozpadu.
+                Z jádra vylétne pozitron (a neutrino),
+                \begin{equation}
+                    \ce{^{\it A}_{\it Z}X}\rightarrow\ce{^{\it A}_{{\it Z}-1}Y}+e^{+}+\nu_{e}.                    
+                \end{equation}
+                Nové jádro se nachází o jedno políčko diagonálně vpravo dolů.
+                Tato přeměna se vyskytuje u jader s přebytkem protonů (jádra nad údolím stability).
+        \end{enumerate}
+
+        Kromě těchto procesů mohou ještě jádra přímo vystřelit proton, neutron, nebo se samovolně rozštěpit na dvě lehčí jádra.
+        K těmto procesům však dochází jen u extrémních případů nuklidů vyrobených uměle.
+
+    \subsection{Rozpadové řady}
+        Produkty přeměn nestabilních nuklidů mohou opět podléhat radioaktivním přeměnám.
+        Ze směrů rozpadů v tabulce nuklidů je jasné, že celá tabulka se rozpadá na čtyři nezávislé skupiny nuklidů.
+        Rozpadové řady začínající u v přírodě se vyskytujících nuklidů ze skupiny aktinoidů a končící stabilním prvkem, nejčastěji olovem, jsou:
+        \begin{itemize}
+            \item $\ce{^{238}U}\rightarrow\ce{^{206}Pb}$
+            \item $\ce{^{235}U}\rightarrow\ce{^{207}Pb}$
+            \item $\ce{^{232}Th}\rightarrow\ce{^{208}Pb}$
+            \item $\ce{^{237}Np}\rightarrow\ce{^{205}Tl}$
+        \end{itemize}
+        \begin{task}
+            Pomocí tabulky nuklidů určete všechny meziprodukty těchto rozpadových řad.
+        \end{task}
+
+\section{Kompilát jaderných hmotností}
+    Jaderné hmotnosti měří laboratoře po celém světě a své výsledky průběžně publikují v odborných časopisech.
+    Přibližně jednou za čtyři roky je vydán souhrnný článek se všemi doposud změřenými hmotnostmi včetně experimentálních odchylek.
+    Poslední vydanou sbírkou je \href{https://www-nds.iaea.org/amdc/}{Atomic Mass Evaluation -- AME 2020}.
+    Sbírka je veřejně dostupná a skládá se z odborných článků shrnujících použité experimentální metody i teorii k jaderným hmotnostem, a textový soubor s uvedenými daty.
+    Analýza textového souboru bude hlavní náplní tohoto projektu.
+
+    
+\end{document}
