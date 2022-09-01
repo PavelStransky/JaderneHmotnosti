@@ -169,6 +169,7 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     \end{align}
 
     \begin{task}
+        \label{task:b}
         Vykreslete graf vazebné energie na nukleon $b$ pro všechny nuklidy.
     \end{task}
 
@@ -330,34 +331,47 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     tj. \emph{údolí stability} se v tabulce nuklidů otáčí pod diagonálu.
 
     \subsection{Fitování}
-    Parametry teoretické závislosti se určí z experimentálních dat hledáním minima součtu kvadrátů odchylek
-    \begin{equation}
-        \chi^{2}=\sum_{Z,N}\left[b(Z,N;a_{V},a_{S},a_{C},a_{A},a_{P})-b_{\mathrm{exp}}(Z,N)\right]^{2}
-    \end{equation}
-    kde se sčítá přes všechny měřené hmotnosti nuklidů s protonovým číslem $Z$ a neutronovým číslem $N$.
-    Vzhledem k tomu, že teoretická závislost~\eqref{eq:BetheWeizsacker} závisí na všech pěti parametrech lineárně, lze z rovnice pro kvadrát odchylek určit soustavu pěti lineárních rovnic pro pět neznámých a tu pak vyřešit.
-    My namísto toho využijeme již hotových funkcí pro fitování, které dnešní programovací jazyky nabízejí.
-    V Pythonu je to například funkce \code{curve\_fit} z balíku \code{scipy}.
+        Parametry teoretické závislosti se určí z experimentálních dat hledáním minima součtu kvadrátů odchylek
+        \begin{equation}
+            \chi^{2}=\sum_{Z,N}\left[b(Z,N;a_{V},a_{S},a_{C},a_{A},a_{P})-b_{\mathrm{exp}}(Z,N)\right]^{2}
+        \end{equation}
+        kde se sčítá přes všechny měřené hmotnosti nuklidů s protonovým číslem $Z$ a neutronovým číslem $N$.
+        Vzhledem k tomu, že teoretická závislost~\eqref{eq:BetheWeizsacker} závisí na všech pěti parametrech lineárně, lze z rovnice pro kvadrát odchylek určit soustavu pěti lineárních rovnic pro pět neznámých a tu pak vyřešit.
+        My namísto toho využijeme již hotových funkcí pro fitování, které dnešní programovací jazyky nabízejí.
+        V Pythonu je to například funkce \code{curve\_fit} z balíku \code{scipy}.
+
+        \begin{task}
+            Nalezněte fitováním parametry rovnice~\eqref{eq:BetheWeizsacker}.
+        \end{task}
+
+        \begin{task}
+            Zakreslete do grafu vazebných energií z úlohy~\ref{task:b} údolí stability dané rovnicí~\eqref{eq:Valley}.
+        \end{task}
+        Rovnici je nutné vyřešit numericky.
+        K tomu lze v Pythonu využít například knihovní funkci \code{fsolve}.
+
+        \begin{task}
+            Zakreslete do grafu rozdíl $\Delta b$ naměřené vazebné energie $b_{\mathrm{exp}}$ a vazebné energie dané Betheho-Weizsäckerovou formulí~\eqref{eq:BetheWeizsackerA} s nafitovanými parametry.
+        \end{task}
+
+    \subsection{Slupková struktura}
+        V grafu poslední úlohy je vidět pravidelná struktura vodorovných a svislých čar, na kterých je rozdíl $\Delta b$ větší než pro hodnoty dále od čar.
+        Je to tím, že jádro má ve skutečnosti slupkovou strukturu podobně jako atomový obal a nukleony pro \uv{magická jádra} jsou mnohem silněji vázaná.
+        Jaderná magická čísla jsou $2,8,20,28,40,50,82,126$.
+        Lze je pozorovat nejen na veličině $\Delta b$, ale také například na dvouneutronové nebo dvouprotonové\footnote{Dvounukleonová proto, aby se eliminoval efekt párovacího členu.} separační energii - nukleony v uzavřené valenční slupce jsou mnohem silněji vázané, a je tedy potřeba větší energie k jejich vyražení.
 
     \begin{task}
-        Nalezněte fitováním parametry rovnice~\eqref{eq:BetheWeizsacker}.
+        Vyznačte v grafu poslední úlohy magická čísla -- místa uzavřených jaderných slupek.
     \end{task}
 
     \begin{task}
-        Zakreslete do grafu vazebných energií z úlohy údolí stability dané rovnicí~\eqref{eq:Valley}.
+        Zakreslete do grafu dvouneutronovou 
+        \begin{equation}
+            S_{2n}=M(Z,N-2)+2M_{n}-M(Z,N)
+        \end{equation}
+        a dvouprotonovou separační energii
+        \begin{equation}
+            S_{2p}=M(Z-2,N)+2M_{p}-M(Z,N).
+        \end{equation}
     \end{task}
-
-    Jádro má ve skutečnosti slupkovou strukturu podobně jako atomový obal.
-
-\begin{task}
-    Určete dvouneutronovou separační energii
-    \begin{equation}
-        S_{2n}=M(Z,N-2)+2M_{n}-M(Z,N)
-    \end{equation}
-    a zakreslete ji do grafu.
-\end{task}
-
-
-\subsection{Neutronová a protonová driplajna}
-
 \end{document}

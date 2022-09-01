@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm 
 from matplotlib.colors import ListedColormap
 
-from scipy.optimize import curve_fit
+from scipy.optimize import curve_fit, fsolve
 
 """ All the numbers are in MeVs """
 
@@ -89,7 +89,47 @@ def convert_2d(nuclides, name="b"):
     return result
 
 
-def plot_b(nuclides):
+def valley_of_stability(p, max_n):
+    """ Calculates the valley of stability """
+    r = 0.5 * p[2] / p[3]
+
+    def f(z, n):
+        return n - z * (1 + r * (n + z)**(2/3))
+    
+    ns = np.linspace(1, max_n, max_n)
+    zs = []
+
+    for n in ns:
+        zs.append(fsolve(f, n, [n])[0])
+        
+    return ns, np.array(zs)
+
+
+def drip_line(p, max_n):
+    """ Calculates the bottom drip line - the upper doesn't make much sense """
+    ns, zs = valley_of_stability(p, max_n)
+
+    rn = []
+    rz = []
+
+    for n, z in zip(ns, zs):
+        n = int(n)
+        z = int(z)
+
+        if z % 2 == 1:
+            z += 1
+
+        while b_theory((n, z), *p) > 0:
+            z -= 2
+
+        rn.append(n)
+        rz.append(z)
+
+
+    return np.array(rn), np.array(rz)
+
+
+def plot_b(nuclides, p=None):
     """ Plots the binding energy """
     b = convert_2d(nuclides, "b")
 
@@ -97,6 +137,10 @@ def plot_b(nuclides):
     
     # Line N = Z
     plt.plot([0, min(b.shape)], [0, min(b.shape)], "black")
+
+    if p is not None:
+        plt.plot(*valley_of_stability(p, b.shape[0]))
+        plt.plot(*drip_line(p, b.shape[0]))
 
     plt.colorbar(label="MeV")                          
     plt.title("Binding energy per nucleon")
@@ -249,11 +293,18 @@ def b_theory(x, a_v, a_s, a_c, a_a, a_p):
     b = a_v - a_s * a**(-1/3) - a_c * z * z * a**(-4/3) - a_a * ((n - z) / a)**2
     delta = a_p * a**(-3/2)
 
-    for i in range(len(z)):
-        if z[i] % 2 == 1 and n[i] % 2 == 1:
-            delta[i] = -delta[i]
-        if a[i] % 2 == 1:
-            delta[i] = 0
+    if type(z) is int:
+        if z % 2 == 1 and n % 2 == 1:
+            delta = -delta
+        if a % 2 == 1:
+            delta = 0
+
+    else:
+        for i in range(len(z)):
+            if z[i] % 2 == 1 and n[i] % 2 == 1:
+                delta[i] = -delta[i]
+            if a[i] % 2 == 1:
+                delta[i] = 0
 
     b += delta
 
@@ -303,6 +354,8 @@ def bw_fit(nuclides):
 
     plt.show()
 
+    return p
+
 if __name__ == "__main__":
     nuclides = read_data()
     plot_b(nuclides)
@@ -318,4 +371,5 @@ if __name__ == "__main__":
     s2n(nuclides)
     s2p(nuclides)
 
-    bw_fit(nuclides)
+    p = bw_fit(nuclides)
+    plot_b(nuclides, p)
