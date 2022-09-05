@@ -123,8 +123,8 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     počet neutronu $N$ se nazývá \emph{neutronové číslo}
     a jejich součet $A=N+Z$ je \emph{hmotnostní číslo} nebo nukleonové číslo.
 
-    Jádro se obecně označuje $\ce{^{\it A}_{\it P}X}$, kde X je symbol daného prvku, například $\ce{^{235}_{92}U}$.
-    Protonové číslo se často vynechává, protože je jednoznačně dáno symbolem prvku.
+    Jádro se obecně označuje $\ce{^{\it A}_{\it P}X}$ nebo dokonce $\ce{^{\it A}_{\it P}X_{\it N}}$, kde X je symbol daného prvku, například $\ce{^{235}_{92}U}$ nebo $\ce{^{235}_{92}U_{143}}$.
+    Protonové číslo se často vynechává, protože je jednoznačně dáno symbolem prvku, a neutronové číslo lze dopočítat z hmotnostního čísla.
 
     Hmotnost atomového jádra je
     \begin{equation}
@@ -145,9 +145,13 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     Atomová jádra s daným $N$ a $Z$ se nazývají \emph{nuklidy}.
     Uspořádávají se do~\href{https://upload.wikimedia.org/wikipedia/commons/b/b5/NuclideMap_stitched.png}{tabulky nuklidů},\footnote{Nuclear chart.} kde na vodorovné ose je obvykle neutronové číslo $N$ a na svislé ose protonové číslo $Z$.
     Jádra stejného prvku lišící se počtem neutronů se nazývají \emph{izotopy} a v tabulce nuklidů tvoří řádky.
-    V tabulce také uvádějí další charakteristiky příslušného atomového jádra, jako například způsoby přeměny (rozpadové kanály), poločas přeměny (střední doba života), relativní zastoupení (pro přirozeně se vyskytující izotopy) nebo charakteristické energie $\gamma$ záření.
+    V tabulce se také uvádějí další charakteristiky příslušného atomového jádra, jako například způsoby přeměny (rozpadové kanály), poločas přeměny (střední doba života), relativní zastoupení (pro přirozeně se vyskytující izotopy) nebo charakteristické energie $\gamma$ záření.\footnote{
+        Doplňující údaje k tabulce nuklidů lze nalézt na stránce\href{https://www.nndc.bnl.gov/nudat3/}{Nudat} (National Nuclear Data Center, Brookhaven National Laboratory).
+    }
 
     Doposud byly změřeny hmotnosti 2550 nuklidů, ale odhaduje se, že celkový počet nuklidů může být okolo 8000.
+    Lehká jádra vznikají v jádrech hvězd, těžká jádra pak při výbuchu supernov a při srážce neutronových hvězd. 
+    Původ jader je schematicky vyobrazen například v této \href{https://upload.wikimedia.org/wikipedia/commons/3/31/Nucleosynthesis_periodic_table.svg}{tabulce}.
 
 \section{Kompilát jaderných hmotností}
     Jaderné hmotnosti měří laboratoře po celém světě a své výsledky průběžně publikují v odborných časopisech.
@@ -180,6 +184,14 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     Z těchto nuklidů již nelze získat žádnou energii a pro jakoukoliv jejich radioaktivní přeměnu musíme energii dodat.
     Nuklidy se vyskytují v konečných fázích vývoje některých hvězd před tím, než explodují jako supernovy.
 
+    \begin{task}
+        Kolik energie se uvolní při fúzi $1\unit{g}$ deuteria $\ce{^{2}H}$ na helium $\ce{^{4}He}$?
+        Nalezněte, jaké je zastoupení molekul $\mathrm{D_{2}O}$ v přirozeně se vyskytující vodě.\footnote{
+            Zhruba $160\unit{ppm}$.
+        }
+        Kolik energie by se získalo fúzí všeho deuteria z $1\unit{ml}$ vody?
+    \end{task}
+
 \section{Radioaktivní přeměna prvků}
     Atomová jádra mají tendenci přeměňovat se tak, aby byla co nejstabilnější. Tím se zvyšuje jejich vazebná energie na nukleon a při přeměně se přebytečná energie vyzařuje, což se využívá například v energetice v atomových elektrárnách.
 
@@ -211,6 +223,11 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
             \end{equation}
             Nové jádro se nachází o jedno políčko diagonálně vpravo dolů $\searrow$.
             Tato přeměna se vyskytuje u jader s přebytkem protonů (jádra nad údolím stability).
+
+            Podobný proces jako $\beta^{+}$ rozpad je ~\emph{elektronový záchyt}, kdy atomové jádro jádro zachytí elektron z elektronového obalu a dojde k procesu
+            \begin{equation}
+                \ce{^{\it A}_{\it Z}X}+e^{-}\rightarrow\ce{^{\it A}_{{\it Z}-1}Y}+\nu_{e}.                    
+            \end{equation}
     \end{enumerate}
 
     Kromě těchto procesů mohou ještě jádra přímo vystřelit proton či neutron, pokud se nacházejí za tzv. protonovou nebo neutronovou driplajnou, nebo se samovolně rozštěpit na dvě lehčí jádra.
@@ -241,6 +258,11 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     \end{itemize}
     \begin{task}
         Pomocí tabulky nuklidů určete všechny meziprodukty těchto rozpadových řad.
+    \end{task}
+
+    \begin{task}
+        $\ce{^{238}U}$ je nejtěžší nuklid vyskytující se v přírodě.
+        Proč tomu tak je?
     \end{task}
 
 \section{Jaderná interakce}
