@@ -132,6 +132,7 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     \end{equation}
     kde $B$ je \emph{vazebná energie}.
     Aby jádro mohlo existovat, musí být $B>0$.
+    Jedná se o potenciální energii přitahujících se nukleonů.
     Vazebnou energii lze určit, pokud známe (změříme) hmotnost příslušného atomového jádra.
     Čím je vazebná energie vyšší, tím je jádro silněji vázané a stabilnější.
     Další často používaná veličina je vazebná energie na nukleon,
@@ -146,7 +147,7 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
     Uspořádávají se do~\href{https://upload.wikimedia.org/wikipedia/commons/b/b5/NuclideMap_stitched.png}{tabulky nuklidů},\footnote{Nuclear chart.} kde na vodorovné ose je obvykle neutronové číslo $N$ a na svislé ose protonové číslo $Z$.
     Jádra stejného prvku lišící se počtem neutronů se nazývají \emph{izotopy} a v tabulce nuklidů tvoří řádky.
     V tabulce se také uvádějí další charakteristiky příslušného atomového jádra, jako například způsoby přeměny (rozpadové kanály), poločas přeměny (střední doba života), relativní zastoupení (pro přirozeně se vyskytující izotopy) nebo charakteristické energie $\gamma$ záření.\footnote{
-        Doplňující údaje k tabulce nuklidů lze nalézt na stránce\href{https://www.nndc.bnl.gov/nudat3/}{Nudat} (National Nuclear Data Center, Brookhaven National Laboratory).
+        Doplňující údaje k tabulce nuklidů lze nalézt na stránce \href{https://www.nndc.bnl.gov/nudat3/}{Nudat} (National Nuclear Data Center, Brookhaven National Laboratory).
     }
 
     Doposud byly změřeny hmotnosti 2550 nuklidů, ale odhaduje se, že celkový počet nuklidů může být okolo 8000.
@@ -224,10 +225,11 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
             Nové jádro se nachází o jedno políčko diagonálně vpravo dolů $\searrow$.
             Tato přeměna se vyskytuje u jader s přebytkem protonů (jádra nad údolím stability).
 
-            Podobný proces jako $\beta^{+}$ rozpad je ~\emph{elektronový záchyt}, kdy atomové jádro jádro zachytí elektron z elektronového obalu a dojde k procesu
+            Podobný proces jako $\beta^{+}$ rozpad je ~\emph{elektronový záchyt}\footnote{Elektronový záchyt se obvykle označuje jako $\epsilon$ přeměna.}, kdy atomové jádro jádro zachytí elektron z elektronového obalu a dojde k procesu
             \begin{equation}
                 \ce{^{\it A}_{\it Z}X}+e^{-}\rightarrow\ce{^{\it A}_{{\it Z}-1}Y}+\nu_{e}.                    
             \end{equation}
+            Elektronový záchyt má nižší práh než $\beta^{+}$ rozpad.
     \end{enumerate}
 
     Kromě těchto procesů mohou ještě jádra přímo vystřelit proton či neutron, pokud se nacházejí za tzv. protonovou nebo neutronovou driplajnou, nebo se samovolně rozštěpit na dvě lehčí jádra.
@@ -241,9 +243,11 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
         M(Z, N)-M_{\mathrm{He}}>M(Z-2,N-2),
     \end{equation}
     kde $M_{\mathrm{He}}=M(2,2)$ je hmotnost $\alpha$ částice.
+    Jediné lehké jádro rozpadající se $\alpha$ rozpadem je $\ce{^{8}_{4}Be}$, které si lze vlastně představit jako složené ze dvou $\alpha$ částic.
 
     \begin{task}
-        Určete, která jádra se mohou rozpadat $\beta$ rozpadem a $\beta^{+}$ rozpadem a zakreslete je do grafu.
+        Určete, která jádra se mohou rozpadat $\beta$ přeměnou a $\beta^{+}$ ($\epsilon$) přeměnou a zakreslete je do grafu.
+        Porovnejte s tabulkou nuklidů.
     \end{task}
     
 \subsection{Rozpadové řady}
@@ -345,7 +349,7 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
 
     Z Betheho-Weizsäckerovy formule je vidět, že kdyby nebylo Coulombického odpuzování, pak by vždy nejstabilnější jádra měla díky asymetrickému členu $N=Z$.        
     Coulombické odpuzování způsobuje, že stabilnější jádra budou mít více neutronů než protonů, přičemž tento efekt je výraznější u těžších jader.
-    Z formule~\eqref{eq:BetheWeizsacker} lze odvodit, že nejstabilnější jádra mají 
+    Z formule~\eqref{eq:BetheWeizsacker} se dá odvodit, že nejstabilnější jádra mají 
     \begin{equation}
         \label{eq:Valley}
         \frac{N}{Z}\approx 1+\frac{a_{C}}{2a_{A}}A^{\frac{2}{3}},
@@ -378,8 +382,8 @@ Navíc se pracuje v tzv.~\emph{přirozených jednotkách}, ve kterých je rychlo
 
     \subsection{Slupková struktura}
         V grafu poslední úlohy je vidět pravidelná struktura vodorovných a svislých čar, na kterých je rozdíl $\Delta b$ větší než pro hodnoty dále od čar.
-        Je to tím, že jádro má ve skutečnosti slupkovou strukturu podobně jako atomový obal a nukleony pro \uv{magická jádra} jsou mnohem silněji vázaná.
-        Jaderná magická čísla jsou $2,8,20,28,40,50,82,126$.
+        Je to tím, že jádro má ve skutečnosti slupkovou strukturu podobně jako atomový obal a nukleony pro \emph{magická jádra} jsou mnohem silněji vázaná.
+        Jaderná magická čísla pro protony i neutrony jsou $2,8,20,28,40,50,82,126$.
         Lze je pozorovat nejen na veličině $\Delta b$, ale také například na dvouneutronové nebo dvouprotonové\footnote{Dvounukleonová proto, aby se eliminoval efekt párovacího členu.} separační energii - nukleony v uzavřené valenční slupce jsou mnohem silněji vázané, a je tedy potřeba větší energie k jejich vyražení.
 
     \begin{task}

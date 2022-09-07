@@ -8,9 +8,10 @@ from scipy.optimize import curve_fit, fsolve
 
 """ All the numbers are in MeVs """
 
-# Constants (masses of proton, neutron, and atomic constant)
+# Constants (masses of proton, neutron, electron and atomic constant)
 Mp = 938.2720882
 Mn = 939.5654205
+Me = 0.510998950
 u = 931.4941024
 
 def read_data():
@@ -29,6 +30,7 @@ def read_data():
             nuclide["Z"] = int(line[10:14])
             nuclide["A"] = int(line[15:19])
 
+            # Check if A = N + Z
             if nuclide["N"] + nuclide["Z"] != nuclide["A"]:
                 print(f"Inconsistency at N={nuclide['N']}, Z={nuclide['Z']}")
 
@@ -36,7 +38,7 @@ def read_data():
 
             b = line[54:66]
 
-            # We skip nonexperimental values marked by # sign
+            # We skip nonexperimental values marked by the # sign
             if b.find('#') >= 0:
                 continue
 
@@ -155,6 +157,57 @@ def sort_b(nuclides):
     bs = [nuclide["b"] for nuclide in nuclides]
     return [nuclide for _, nuclide in sorted(zip(bs, nuclides))]
 
+def deuteron_fusion(nuclides, mass):
+    """ Calculates the energy obtained by fusion of mass kg of deuterium (excluding electrons) """
+    m = convert_2d(nuclides, "M")
+    mD = m[1, 1]
+    mHe = m[2, 2]
+
+    MeV_kg = 1E6 * 1.6021767E-19 / 2.99792E8**2
+    MeV_J = 1E6 * 1.6021767E-19
+
+    # Number of deuterons in mass 
+    nD = mass / (mD * MeV_kg)
+
+    # Energy gain by the fusion of one reaction
+    e1 = 2 * mD - mHe
+
+    # Total energy
+    energy_MeV = e1 * nD / 2
+
+    # Conversion MeV to J
+    energy_J = energy_MeV * MeV_J
+    return energy_J
+
+def water_fusion(nuclides, mass):
+    """ Calculates the energy obtained by fusion of mass kg of deuterium (excluding electrons) """
+    m = convert_2d(nuclides, "M")
+    mD = m[1, 1]
+    mHe = m[2, 2]
+
+    MeV_kg = 1E6 * 1.6021767E-19 / 2.99792E8**2
+    MeV_J = 1E6 * 1.6021767E-19
+
+    # Molar weight [g / mol] of watter
+    h2o_mol = 18.015
+    NA = 6.0221E23
+
+    # Number of molecules 
+    n_h2o = 1000 * mass / (h2o_mol / NA)
+
+    # Number of D2O
+    n_d2o = 160E-6 * n_h2o
+
+    # Energy gain by the fusion of one reaction
+    e1 = 2 * mD - mHe
+
+    # Total energy
+    energy_MeV = e1 * n_d2o
+
+    # Conversion MeV to J
+    energy_J = energy_MeV * MeV_J
+    return energy_J
+
 
 def alpha(nuclides):
     """ Finds all possible nuclides that can decay via alpha process """
@@ -232,6 +285,37 @@ def beta(nuclides):
 
     plt.show()
 
+def beta_epsilon(nuclides):
+    """ Finds all possible nuclides that can decay via beta or electron capture process """
+    max_n, max_z, _ = max_nza(nuclides)
+    masses = convert_2d(nuclides, "M")
+    beta = np.zeros_like(masses)
+
+    for nuclide in nuclides:
+        n = nuclide["N"]
+        z = nuclide["Z"]
+
+        # We don't have data
+        if masses[n, z] == 0:
+            continue
+        if z >= max_z or masses[n - 1, z + 1] == 0:
+            continue
+        if n >= max_n or masses[n + 1, z - 1] == 0:
+            continue
+
+        if n > 1 and masses[n, z] > masses[n - 1, z + 1] + Me:
+            beta[n, z] = 1
+        elif z > 1 and masses[n, z] + Me > masses[n + 1, z - 1]:
+            beta[n, z] = 2
+        else:
+            beta[n, z] = 3
+
+    plt.imshow(beta.transpose(), cmap=colormap(), origin="lower", interpolation="none")
+    plt.title("Possible beta (in blue) or epsilon (in yellow) decay.")
+    plt.xlabel("N")
+    plt.ylabel("Z")  
+
+    plt.show()
 
 def s2n(nuclides):
     """ Two-neutron separation energy """
@@ -366,8 +450,12 @@ if __name__ == "__main__":
     for i in range(5):
         print(sorted_nuclides[-i - 1])
 
+    print("Burning 1g of D gives", deuteron_fusion(nuclides, 0.001) / 3600000, "kWh")
+    print("Burning 1g of water gives", water_fusion(nuclides, 0.001) / 3600000, "kWh")
+
     alpha(nuclides)
     beta(nuclides)
+    beta_epsilon(nuclides)
     s2n(nuclides)
     s2p(nuclides)
 
